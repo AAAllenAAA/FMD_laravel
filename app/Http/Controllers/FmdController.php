@@ -217,12 +217,39 @@ class FmdController extends Controller
         $key = $request->query('key');
         // 資料庫尚未建立 先用預設資料
         // SQL語法之後會比較複雜一點
-        //$data = \App\Models\Fmd::where('model', 'like', "%$key%")->get();
-        $data[] = ['test1' => $key, 'test2' => '範例資料A', 'test3' => 'A', 'test4' => 'A', 'test5' => 'A', 'test6' => 'A', 'test7' => 'A', 'test8' => 'A', 'test9' => 'A', 'test10' => 'A', 'test11' => 'A', 'test12' => 'A', 'test13' => 'A', 'test14' => 'A', 'test15' => 'A'];
-        $data[] = ['test1' => $key, 'test2' => '範例資料B', 'test3' => 'B', 'test4' => 'B', 'test5' => 'B', 'test6' => 'B', 'test7' => 'B', 'test8' => 'B', 'test9' => 'B', 'test10' => 'B', 'test11' => 'B', 'test12' => 'B', 'test13' => 'B', 'test14' => 'B', 'test15' => 'B'];
-        $data[] = ['test1' => $key, 'test2' => '範例資料C', 'test3' => 'C', 'test4' => 'C', 'test5' => 'C', 'test6' => 'C', 'test7' => 'C', 'test8' => 'C', 'test9' => 'C', 'test10' => 'C', 'test11' => 'C', 'test12' => 'C', 'test13' => 'C', 'test14' => 'C', 'test15' => 'C'];
+        //$data[] = ['test1' => $key, 'test2' => '範例資料A', 'test3' => 'A', 'test4' => 'A', 'test5' => 'A', 'test6' => 'A', 'test7' => 'A', 'test8' => 'A', 'test9' => 'A', 'test10' => 'A', 'test11' => 'A', 'test12' => 'A', 'test13' => 'A', 'test14' => 'A', 'test15' => 'A'];
+        //$data[] = ['test1' => $key, 'test2' => '範例資料B', 'test3' => 'B', 'test4' => 'B', 'test5' => 'B', 'test6' => 'B', 'test7' => 'B', 'test8' => 'B', 'test9' => 'B', 'test10' => 'B', 'test11' => 'B', 'test12' => 'B', 'test13' => 'B', 'test14' => 'B', 'test15' => 'B'];
+        //$data[] = ['test1' => $key, 'test2' => '範例資料C', 'test3' => 'C', 'test4' => 'C', 'test5' => 'C', 'test6' => 'C', 'test7' => 'C', 'test8' => 'C', 'test9' => 'C', 'test10' => 'C', 'test11' => 'C', 'test12' => 'C', 'test13' => 'C', 'test14' => 'C', 'test15' => 'C'];
 
+        // 找出符合機種關鍵字的manu
+        $manufacturers = Manufacturer::where('manu_model', 'like', "%{$key}%")->get();
 
+        $data = [];
+
+        foreach ($manufacturers as $manu) {
+            $mpnItem = mpnData::where('manuId', $manu->manu_id)->first();
+            $homoItem = Homogeneous::where('manuId', $manu->manu_id)->first();
+            $subItem = SubstanceData::where('manuId', $manu->manu_id)->first();
+
+            $data[] = [
+                'manu_name' => $manu->manu_name,
+                'manu_partnum' => $manu->manu_PartNumber,
+                'mpn_weight' => $mpnItem->mpn_weight ?? '',
+                'mpn_weight_UOM' => 'mg',
+                'mpn_EU_RoHS' => $mpnItem->status_RoHS ?? '',
+                'mpn_RoHS_exemption' => $mpnItem->exemptions_RoHS ?? '',
+                'subitem_name' => $homoItem->subitem_name ?? '',
+                'homo_material_name' => $homoItem->homo_MaterialName ?? '',
+                'homo_material_weight' => $homoItem->homo_MaterWeight ?? '',
+                'homo_material_weight_UOM' => 'mg',
+                'substance_name' => $subItem->sub_name ?? '',
+                'sub_cas' => $subItem->sub_CAS ?? '',
+                'sub_weight' => $subItem->sub_Weight ?? '',
+                'sub_weight_UOM' => 'mg',
+                'ppm' => $subItem->ppm ?? '',
+                'sub_exemption' => $subItem->sub_exemption ?? '',
+            ];
+        }
 
         return response()->json([
             "data" => $data   // DataTables 需要 data 屬性
