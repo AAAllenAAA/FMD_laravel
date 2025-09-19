@@ -103,7 +103,8 @@
                 "autoWidth": true,
                 "stripeClasses": [],
                 "ajax": {
-                    "url": "{{ route('fmd.data') }}", // 這裡是Laravel API Route
+                    //"url": "/api/fmd/search", // 這裡是Laravel API Route
+                    "url": "{{ route('fmd.data') }}",
                     "type": "GET",
                     "data": {
                         key: "{{ $key }}"

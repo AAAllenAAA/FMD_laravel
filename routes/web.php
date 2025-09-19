@@ -2,6 +2,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FmdController;
 
+/*
+php artisan serve 網址要改為: http://127.0.0.1:8000/upload
+否則就要用: http://localhost/FMD_laravel/public/upload
+*/ 
+
 Route::get('/', function () {
     return view('welcome');
 });
