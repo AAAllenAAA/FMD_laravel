@@ -16,8 +16,9 @@ use App\Http\Controllers\FmdController;
 | 要使用RESTful API 
 | 1. 首先要先改AJAX的URL "url": "/api/fmd/search",
 | 2. 然後再改XAMPP的(E:\XAMPP\apache\conf\extra\httpd-vhosts.conf)最後註解拿掉
-| 3. XAMPP Apache重開
-| 4. 網址改用http://laravel.test/, http://laravel.test/upload
+| 3. 用系統管理員身分打開記事本並開啟舊檔案->C:\Windows\System32\drivers\etc\hosts 把最後註解拿掉(127.0.0.1 laravel.test)
+| 4. XAMPP Apache重開
+| 5. 網址改用http://laravel.test/, http://laravel.test/upload
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
