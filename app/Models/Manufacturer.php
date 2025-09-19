@@ -12,7 +12,7 @@ class Manufacturer extends Model
     protected $fillable = [
         "manu_name",
         "manu_PartNumber",
-        "manu_Model",
+        "manu_model",
     ];
 
 }

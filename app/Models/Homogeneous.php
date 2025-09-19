@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Homogeneous extends Model
 {
+    public $timestamps = false;
     protected $table = "homogeneous_data";
     protected $primaryKey = 'homo_id';
     protected $fillable = [

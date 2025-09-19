@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class mpnData extends Model
 {
+    public $timestamps = false;
     protected $table = "mpn_data";
     protected $primaryKey = 'mpn_id';
     protected $fillable = [

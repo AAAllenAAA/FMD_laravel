@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class SubstanceData extends Model
 {   
+    public $timestamps = false;
     protected $table = "substance_data";
     protected $primaryKey = 'sub_id';
 
