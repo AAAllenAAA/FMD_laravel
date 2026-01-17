@@ -256,4 +256,41 @@ class FmdController extends Controller
         ]);
     }
 
+
+    public function calculateEfficiency(Request $request){
+
+        // 取得網址參數 (?planned=50&actual=100)
+        $planned = $request->query('planned', 0);
+        $actual = $request->query('actual', 0);
+
+        if ($planned <= 0){
+            return response()->json([
+                'status' => 'error',
+                'message' => '預計產量必須大於 0'
+            ], 400);
+        }
+
+        $rate = round(($actual / $planned) * 100, 2);
+
+        $level = 'normal';
+        if ($rate >= 100) $level = 'excellent';
+        elseif ($rate >= 80) $level = 'good';
+        else $level = 'normal';
+
+        return response()->json([
+            'status' => 'success',
+            'summary' => [
+                'planned_amount' => (int)$planned,
+                'actual_amount' => (int)$actual,
+                'completion_rate' => $rate . '%' ,
+                'performance_level' => $level,
+                'checked_at' => now()->toDateTimeString()
+            ]
+        ]);
+
+
+    }
+
+
+
 }

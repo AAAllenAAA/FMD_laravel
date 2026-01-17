@@ -27,3 +27,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // 新增的 API 路由
 Route::get('/fmd/search', [FmdController::class, 'getFMDdata']);
+
+// 網址會是 http://laravel.test/api/production/efficiency
+Route::get('/production/efficiency', [FmdController::class, 'calculateEfficiency']);
