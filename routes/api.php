@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FmdController;
+use App\Http\Controllers\Api\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,3 +31,10 @@ Route::get('/fmd/search', [FmdController::class, 'getFMDdata']);
 
 // 網址會是 http://laravel.test/api/production/efficiency
 Route::get('/production/efficiency', [FmdController::class, 'calculateEfficiency']);
+
+//Test RESRful API 2026 / 02/ 08
+// 1. 建立訂單 (讓前端呼叫)
+Route::post('/v1/orders', [PaymentController::class, 'store']);
+
+// 2. 接收綠界回傳 (綠界伺服器呼叫)
+Route::post('/v1/payment/callback', [PaymentController::class, 'update']);
